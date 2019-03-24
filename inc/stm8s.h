@@ -59,6 +59,9 @@ struct clk_t {
 
 #define CLK_BASE 0x50C0
 
+#define CLK_PCKENR1_PCKEN13 (1 << 3)
+#define CLK_PCKENR2_PCKEN22 (1 << 2)
+
 /*
  *AWU
  */
@@ -70,8 +73,6 @@ struct awu_t {
 };
 
 #define AWU_BASE 0x50F0
-
-static volatile struct awu_t * const awu = (struct awu_t *) AWU_BASE;
 
 /*
  *UART
@@ -133,9 +134,9 @@ struct adc_t {
  *ASM instructions
  */
 
-#define     nop()       __asm__("nop")
-#define     halt()      __asm__("halt")
-#define     rim()       __asm__("rim")
-#define     wfi()       __asm__("wfi")
+#define     nop()       __asm__("nop\n")
+#define     halt()      __asm__("halt\n")
+#define     rim()       __asm__("rim\n")
+#define     wfi()       __asm__("wfi\n")
 
 #endif // _STM8S_H_

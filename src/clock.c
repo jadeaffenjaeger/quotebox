@@ -3,6 +3,16 @@
 static volatile struct clk_t * const clk = (struct clk_t *) CLK_BASE;
 
 void clock_init() {
-    /* Set clock to 16MHz*/
-    clk->CKDIVR = 0x00;
+    /* Set clock to 1MHz*/
+    clk->CKDIVR = 0b110;
+
+    /* Disable peripheral clocks to save power*/
+    /* clk->PCKENR1 = 0x00;*/
+    /* clk->PCKENR2 = 0x00;*/
+
+    /* Enable UART*/
+    /* clk->PCKENR1 |= (CLK_PCKENR1_PCKEN13);*/
+
+    /* Enable AWU*/
+    /* clk->PCKENR2 |= (CLK_PCKENR2_PCKEN22);*/
 }
