@@ -74,6 +74,8 @@ struct awu_t {
 
 #define AWU_BASE 0x50F0
 
+#define AWU_CSR_AWUEN (1 << 4);
+
 /*
  *UART
  */
@@ -92,6 +94,8 @@ struct uart_t {
     uint8_t PSCR;
 };
 
+#define UART1_BASE 0x5230
+
 #define UART_SR_TXE     (1 << 7)
 #define UART_SR_TC      (1 << 6) 
 #define UART_SR_RXNE    (1 << 5) 
@@ -100,8 +104,6 @@ struct uart_t {
 
 #define UART_CR2_TEN    (1 << 3)
 #define UART_CR2_REN    (1 << 2)
-
-#define UART1_BASE 0x5230
 
 /*
  *ADC
@@ -129,6 +131,12 @@ struct adc_t {
 };
 
 #define ADC1_BASE 0x53E0
+
+/*
+ *Interrupt vectors
+ */
+
+#define ISR_AWU_vect 1
 
 /*
  *ASM instructions

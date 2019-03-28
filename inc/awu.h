@@ -3,8 +3,17 @@
 
 #include "stm8s.h"
 
-void awu_sleep();
+typedef enum awu_interval {
+    SECONDS_1,
+    SECONDS_2,
+    SECONDS_5,
+    SECONDS_10,
+    SECONDS_20,
+    SECONDS_30
+} awu_interval_t;
 
-void isr_awu(void) __interrupt(1);
+void awu_sleep(awu_interval_t interval);
+
+void isr_awu(void) __interrupt(ISR_AWU_vect);
 
 #endif // _AWU_H_
