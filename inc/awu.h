@@ -4,6 +4,7 @@
 #include "stm8s.h"
 
 typedef enum awu_interval {
+    MSECONDS_100,
     SECONDS_1,
     SECONDS_2,
     SECONDS_5,

@@ -4,11 +4,14 @@ static volatile struct awu_t * const awu = (struct awu_t *) AWU_BASE;
 
 static void _set_interval(awu_interval_t interval) {
 
-    uint8_t tbr = 0;
-    uint8_t apr = 0;
+    uint8_t tbr = 0b1100;
+    uint8_t apr = 42;
 
     /* Get register values*/
     switch(interval) {
+        case MSECONDS_100:
+            tbr = 0b1001;
+            apr = 50;
         case SECONDS_1:
             tbr = 0b1100;
             apr = 62;
@@ -36,8 +39,8 @@ static void _set_interval(awu_interval_t interval) {
     }
 
     /* Write prescaler and value to registers*/
-    awu->TBR |= tbr;
-    awu->APR |= apr;
+    awu->TBR = tbr;
+    awu->APR = apr;
 }
 
 void awu_sleep(awu_interval_t interval) {
