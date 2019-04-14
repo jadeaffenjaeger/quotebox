@@ -2,14 +2,16 @@
 #include "dfplayer.h"
 #include "clock.h"
 #include "awu.h"
+#include "gpio.h"
+
 
 void main() {
     // Configure LED pin
-    gpio_B->DDR = (1 << P5);
-    gpio_B->CR1 = (1 << P5);
 
     clock_init();
     dfplayer_init();
+    gpio_led_init();
+
     awu_sleep(MSECONDS_100);
     dfplayer_reset();
     awu_sleep(MSECONDS_100);
@@ -23,6 +25,6 @@ void main() {
     for(;;) {
         volatile uint16_t test = dfplayer_get_tracks();
         awu_sleep(SECONDS_1);
-        gpio_B->ODR ^= (1 << P5);
+        gpio_led_toggle();
     }
 }

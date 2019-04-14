@@ -31,13 +31,6 @@ struct gpio_t {
 #define P6 6
 #define P7 7
 
-static volatile struct gpio_t * gpio_A = (struct gpio_t *) GPIOA_BASE;
-static volatile struct gpio_t * gpio_B = (struct gpio_t *) GPIOB_BASE;
-static volatile struct gpio_t * gpio_C = (struct gpio_t *) GPIOC_BASE;
-static volatile struct gpio_t * gpio_D = (struct gpio_t *) GPIOD_BASE;
-static volatile struct gpio_t * gpio_E = (struct gpio_t *) GPIOE_BASE;
-static volatile struct gpio_t * gpio_F = (struct gpio_t *) GPIOF_BASE;
-
 /*
  *CLK
  */
