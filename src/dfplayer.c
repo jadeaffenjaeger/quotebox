@@ -14,6 +14,15 @@ static dfplayer_t dfplayer_response = {
     .end = 0xEF
 };
 
+static uint16_t _get_u16(uint8_t * ptr) {
+    return (uint16_t) (ptr[0] << 8 | ptr[1]);
+}
+
+static void _set_u16(uint8_t * ptr, uint16_t val) {
+    ptr[0] = (uint8_t) val >> 8;
+    ptr[1] = (uint8_t) val;
+}
+
 static void _update_checksum() {
 
     uint16_t acc = 0;
@@ -27,16 +36,15 @@ static void _update_checksum() {
 
     acc = -acc;
 
-    dfplayer.checksum_H = (uint8_t) (acc >> 8);
-    dfplayer.checksum_L = (uint8_t) acc & 0xFF;
+    _set_u16(&dfplayer.checksum_H, acc);
 }
 
 void _send_command(dfplayer_cmd_t command, uint16_t param) {
 
     dfplayer.command = (uint8_t) command;
-    dfplayer.param_H = (uint8_t) (param >> 8);
-    dfplayer.param_L = (uint8_t) param & 0xFF;
-
+    /* dfplayer.param_H = param >> 8;*/
+    /* dfplayer.param_L = param > 8;*/
+    /* _set_u16(&dfplayer.param_H, param);*/
     _update_checksum();
 
     uart_send_buf((const uint8_t *) dfplayer, sizeof(dfplayer_t));
@@ -64,7 +72,13 @@ bool _get_response() {
 }
 
 void dfplayer_init() {
+    uart_init();
+}
 
+uint16_t dfplayer_get_tracks() {
+    _send_command(0x47, 0);
+    _get_response();
+    return _get_u16(&dfplayer_response.param_H);
 }
 
 void dfplayer_set_volume(uint8_t volume) {
@@ -82,11 +96,23 @@ void dfplayer_wakeup() {
     _send_command(CMD_NORMAL, 0);
 }
 
+void dfplayer_play() {
+    _send_command(CMD_PLAY, 0);
+}
+
 void dfplayer_reset() {
     _send_command(CMD_RESET, 0);
 }
 
-void dfplayer_play_track(uint16_t num) {
-    _send_command(CMD_PLAY, num);
+void dfplayer_set_track(uint16_t num) {
+    _send_command(CMD_NUM, num);
+}
+
+void dfplayer_playback_mode(dfplayer_mode_t mode) {
+    _send_command(CMD_PLAYBACK_MODE, (uint16_t) mode);
+}
+
+void dfplayer_set_SD() {
+    _send_command(CMD_PLAYBACK_SRC, 1);
 }
 

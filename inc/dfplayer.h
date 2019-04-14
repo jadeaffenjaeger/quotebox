@@ -24,6 +24,13 @@ typedef enum dfplayer_cmd {
     CMD_REPEAT              = 0x11
 } dfplayer_cmd_t;
 
+typedef enum dfplayer_mode {
+    REPEAT                  = 0,
+    FOLDER_REPAT            = 1,
+    SINGLE_REPAT            = 2,
+    RANDOM                  = 3,
+} dfplayer_mode_t;
+
 typedef struct dfplayer {
     const uint8_t start;
     const uint8_t version;
@@ -39,6 +46,15 @@ typedef struct dfplayer {
 
 void dfplayer_init();
 
+uint16_t dfplayer_get_tracks();
+void dfplayer_set_volume(uint8_t volume);
+void dfplayer_standby();
+void dfplayer_wakeup();
+void dfplayer_reset();
+void dfplayer_set_track(uint16_t num);
+void dfplayer_set_SD();
+void dfplayer_play();
+void dfplayer_playback_mode(dfplayer_mode_t mode);
 
 
 #endif // _DFPLAYER_H_
