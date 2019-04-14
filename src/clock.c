@@ -4,7 +4,7 @@ static volatile struct clk_t * const clk = (struct clk_t *) CLK_BASE;
 
 void clock_init() {
     /* Set clock to 250kHz to save some energy*/
-    clk->CKDIVR = 0b110;
+    clk->CKDIVR = 0;
 
     /* Disable peripheral clocks*/
     /* clk->PCKENR1 = 0x00;*/

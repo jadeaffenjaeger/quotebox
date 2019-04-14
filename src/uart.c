@@ -7,13 +7,14 @@ void uart_init() {
     uart1->CR1 &= ~UART_CR1_M;
 
     /* Set to 9600 Baud at 16MHz*/
-    /* uart1->BRR2 = 0x03;*/
-    /* uart1->BRR1 = 0x68;*/
+    uart1->BRR2 = 0x03;
+    uart1->BRR1 = 0x68;
 
-    /* 1 000 000 / 9600 = 104 = 0x0068 => BRR1 = 0x06, BRR2 = 0x08*/
     /* Set to 9600 Baud at 250kHz*/
-    uart1->BRR2 = 0x01;
-    uart1->BRR1 = 0x0A;
+    /* const uint16_t uart_div = 26;*/
+
+    /* uart1->BRR2 = ((uart_div >> 12) & 0xF0) | (uart_div & 0xF);*/
+    /* uart1->BRR1 = uart_div >> 4;*/
 
     uart1->CR2 |= UART_CR2_TEN;
     uart1->CR2 |= UART_CR2_REN;
