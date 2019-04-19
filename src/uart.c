@@ -10,17 +10,12 @@ void uart_init() {
     uart1->BRR2 = 0x03;
     uart1->BRR1 = 0x68;
 
-    /* Set to 9600 Baud at 250kHz*/
-    /* const uint16_t uart_div = 26;*/
+    uart1->CR2 |= UART_CR2_TEN | UART_CR2_REN;
 
-    /* uart1->BRR2 = ((uart_div >> 12) & 0xF0) | (uart_div & 0xF);*/
-    /* uart1->BRR1 = uart_div >> 4;*/
-
-    uart1->CR2 |= UART_CR2_TEN;
-    uart1->CR2 |= UART_CR2_REN;
 }
 
 void uart_send(uint8_t data) {
+    while((uart1->SR & UART_SR_TC) == 0);
     uart1->DR = data;
     while((uart1->SR & UART_SR_TC) == 0);
 }

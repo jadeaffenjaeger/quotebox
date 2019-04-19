@@ -1,53 +1,53 @@
 #include "dfplayer.h"
 
-static dfplayer_t dfplayer = {
+static volatile dfplayer_t dfplayer_request = {
     .start = 0x7E,
     .version = 0xFF,
     .length = 6,
     .end = 0xEF
 };
 
-static dfplayer_t dfplayer_response = {
+static volatile dfplayer_t dfplayer_response = {
     .start = 0x7E,
     .version = 0xFF,
     .length = 6,
     .end = 0xEF
 };
 
-static uint16_t _get_u16(uint8_t * ptr) {
-    return (uint16_t) (ptr[0] << 8 | ptr[1]);
-}
+/* uint8_t dfplayer_request[] = {0x7E, 0xFF, 6, 0, 0, 0, 0, 0, 0, 0xFE}*/
 
-static void _set_u16(uint8_t * ptr, uint16_t val) {
-    ptr[0] = (uint8_t) val >> 8;
-    ptr[1] = (uint8_t) val;
-}
+/* #define COMMAND     3*/
+/* #define RESPONSE    4*/
+/* #define PARAM_H     5*/
+/* #define PARAM_L     6*/
+/* #define CHKSUM_H    7*/
+/* #define CHKSUM_L    8*/
 
 static void _update_checksum() {
 
-    uint16_t acc = 0;
+    volatile int16_t acc = 0;
 
-    acc += dfplayer.version;
-    acc += dfplayer.length;
-    acc += dfplayer.command;
-    acc += dfplayer.feedback;
-    acc += dfplayer.param_H;
-    acc += dfplayer.param_L;
+    acc += dfplayer_request.version;
+    acc += dfplayer_request.length;
+    acc += dfplayer_request.command;
+    acc += dfplayer_request.feedback;
+    acc += dfplayer_request.param_H;
+    acc += dfplayer_request.param_L;
 
     acc = -acc;
 
-    _set_u16(&dfplayer.checksum_H, acc);
+    dfplayer_request.checksum_H = acc >> 8;
+    dfplayer_request.checksum_L = acc;
 }
 
 void _send_command(dfplayer_cmd_t command, uint16_t param) {
 
-    dfplayer.command = (uint8_t) command;
-    /* dfplayer.param_H = param >> 8;*/
-    /* dfplayer.param_L = param > 8;*/
-    /* _set_u16(&dfplayer.param_H, param);*/
+    dfplayer_request.command = (uint8_t) command;
+    dfplayer_request.param_H = (param >> 8);
+    dfplayer_request.param_L = param;
     _update_checksum();
 
-    uart_send_buf((const uint8_t *) dfplayer, sizeof(dfplayer_t));
+    uart_send_buf((const uint8_t *) dfplayer_request, sizeof(dfplayer_t));
 }
 
 bool _get_response() {
@@ -76,9 +76,9 @@ void dfplayer_init() {
 }
 
 uint16_t dfplayer_get_tracks() {
-    _send_command(0x47, 0);
+    _send_command(0x48, 0);
     _get_response();
-    return _get_u16(&dfplayer_response.param_H);
+    return (dfplayer_response.param_H << 8 | dfplayer_response.param_L);
 }
 
 void dfplayer_set_volume(uint8_t volume) {
@@ -113,6 +113,6 @@ void dfplayer_playback_mode(dfplayer_mode_t mode) {
 }
 
 void dfplayer_set_SD() {
-    _send_command(CMD_PLAYBACK_SRC, 1);
+    _send_command(CMD_PLAYBACK_SRC, 0);
 }
 
