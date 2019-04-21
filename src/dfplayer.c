@@ -14,15 +14,6 @@ static volatile dfplayer_t dfplayer_response = {
     .end = 0xEF
 };
 
-/* uint8_t dfplayer_request[] = {0x7E, 0xFF, 6, 0, 0, 0, 0, 0, 0, 0xFE}*/
-
-/* #define COMMAND     3*/
-/* #define RESPONSE    4*/
-/* #define PARAM_H     5*/
-/* #define PARAM_L     6*/
-/* #define CHKSUM_H    7*/
-/* #define CHKSUM_L    8*/
-
 static void _update_checksum() {
 
     volatile int16_t acc = 0;
@@ -114,5 +105,20 @@ void dfplayer_playback_mode(dfplayer_mode_t mode) {
 
 void dfplayer_set_SD() {
     _send_command(CMD_PLAYBACK_SRC, 0);
+}
+
+bool dfplayer_wait_for_init() {
+    bool response = _get_response();
+
+    if(response == false) {
+        return false;
+    }
+
+    // Response is error message
+    if(dfplayer_response.command == 0x40) {
+        return false;
+    }
+
+    return true;
 }
 
