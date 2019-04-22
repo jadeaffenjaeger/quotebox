@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name dfplayer)(type KiCad)(uri ${KIPRJMOD}/components/dfplayer.pretty)(options "")(descr ""))
+  (lib (name stm8)(type KiCad)(uri ${KIPRJMOD}/components/stm8.pretty)(options "")(descr ""))
+)

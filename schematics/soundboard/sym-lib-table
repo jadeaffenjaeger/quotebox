@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name stm8)(type Legacy)(uri ${KIPRJMOD}/components/stm8.lib)(options "")(descr ""))
+  (lib (name dfplayer)(type Legacy)(uri ${KIPRJMOD}/components/dfplayer.lib)(options "")(descr ""))
+)
