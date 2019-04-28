@@ -10,12 +10,16 @@ static volatile struct gpio_t * gpio_F = (struct gpio_t *) GPIOF_BASE;
 
 void gpio_init() {
     /* Init LED Pin*/
-    gpio_B->DDR = (1 << P5);
-    gpio_B->CR1 = (1 << P5);
+    gpio_B->DDR |= (1 << P5);
+    gpio_B->CR1 |= (1 << P5);
+
+    /* Enable Pull-Up for BUSY Pin*/
+    gpio_B->CR1 |= (1 << P4)
 
     /* Init MOSFET Pin*/
-    gpio_C->DDR = (1 << P7);
-    gpio_C->CR1 = (1 << P7);
+    gpio_A->DDR |= (1 << P1);
+    gpio_A->CR1 |= (1 << P1);
+
 }
 
 /*
@@ -43,15 +47,20 @@ void gpio_led_toggle() {
  */
 
 void gpio_fet_on() {
-    gpio_C->ODR |= (1 << P7);
+    gpio_A->ODR |= (1 << P1);
 }
 
 void gpio_fet_off() {
-    gpio_C->ODR &= ~(1 << P7);
+    gpio_A->ODR &= ~(1 << P1);
 }
 
 // Not really needed, but handy for testing
 void gpio_fet_toggle() {
-    gpio_C->ODR ^= (1 << P7);
+    gpio_A->ODR ^= (1 << P1);
+}
+
+bool gpio_player_busy() {
+    bool busy = ((gpio_B->IDR & (1 << P4)) == 0);
+    return busy
 }
 

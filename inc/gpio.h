@@ -7,5 +7,6 @@ void gpio_init();
 void gpio_led_on();
 void gpio_led_off();
 void gpio_led_toggle();
+bool gpio_player_busy();
 
 #endif // _GPIO_H_
