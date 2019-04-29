@@ -43,6 +43,7 @@ static void _set_interval(awu_interval_t interval) {
     awu->APR = apr;
 }
 
+/* Sleep for a fixed interval*/
 void awu_sleep(awu_interval_t interval) {
 
     /* Write prescaler and counter value to registers*/
@@ -53,6 +54,25 @@ void awu_sleep(awu_interval_t interval) {
 
     /* Go to sleep */
     halt();
+}
+
+/* Convenience function to sleep a generic number of seconds*/
+void awu_sleep_n_seconds(uint16_t seconds) {
+    while(seconds > 0) {
+        if (seconds >= 30) {
+            awu_sleep(SECONDS_30);
+            seconds -= 30;
+        } else if (seconds >= 10) {
+            awu_sleep(SECONDS_10);
+            seconds -= 10;
+        } else if (seconds >= 5) {
+            awu_sleep(SECONDS_5);
+            seconds -= 5;
+        } else if (seconds >= 1) {
+            awu_sleep(SECONDS_1);
+            seconds -= 1;
+        }
+    }
 }
 
 void isr_awu(void) __interrupt(ISR_AWU_vect) {
