@@ -63,7 +63,7 @@ bool _get_response() {
 }
 
 void dfplayer_init() {
-    uart_init();
+
 }
 
 uint16_t dfplayer_get_tracks() {
