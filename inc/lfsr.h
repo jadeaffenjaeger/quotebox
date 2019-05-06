@@ -1,12 +1,13 @@
-#ifndef __LFSR_H
-#define __LFSR_H
+#ifndef LFSR_H_
+#define LFSR_H_
 
+#include <stdint.h>
 
 /*
  *Defines polynomial and current state of the LFSR
  */
 typedef struct lfsr {
-    uint8_t mask;
+    const uint8_t mask;
     uint8_t state;
 } lfsr_t;
 
