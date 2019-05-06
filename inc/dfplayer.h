@@ -55,6 +55,7 @@ void dfplayer_set_track(uint16_t num);
 void dfplayer_set_SD();
 void dfplayer_play();
 void dfplayer_playback_mode(dfplayer_mode_t mode);
+bool dfplayer_wait_for_init();
 
 
 #endif // _DFPLAYER_H_
