@@ -14,11 +14,11 @@ void gpio_init() {
     gpio_B->CR1 |= (1 << P5);
 
     /* Enable Pull-Up for BUSY Pin*/
-    gpio_B->CR1 |= (1 << P4)
+    /* gpio_B->CR1 |= (1 << P4);*/
 
     /* Init MOSFET Pin*/
-    gpio_A->DDR |= (1 << P1);
-    gpio_A->CR1 |= (1 << P1);
+    gpio_D->DDR |= (1 << P4);
+    gpio_D->CR1 |= (1 << P4);
 
 }
 
@@ -47,20 +47,20 @@ void gpio_led_toggle() {
  */
 
 void gpio_fet_on() {
-    gpio_A->ODR |= (1 << P1);
+    gpio_D->ODR |= (1 << P4);
 }
 
 void gpio_fet_off() {
-    gpio_A->ODR &= ~(1 << P1);
+    gpio_D->ODR &= ~(1 << P4);
 }
 
 // Not really needed, but handy for testing
 void gpio_fet_toggle() {
-    gpio_A->ODR ^= (1 << P1);
+    gpio_D->ODR ^= (1 << P4);
 }
 
 bool gpio_player_busy() {
     bool busy = ((gpio_B->IDR & (1 << P4)) == 0);
-    return busy
+    return busy;
 }
 

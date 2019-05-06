@@ -14,6 +14,7 @@ typedef enum awu_interval {
 } awu_interval_t;
 
 void awu_sleep(awu_interval_t interval);
+void awu_sleep_n_seconds(uint16_t seconds);
 
 void isr_awu(void) __interrupt(ISR_AWU_vect);
 

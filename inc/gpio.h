@@ -2,6 +2,7 @@
 #define _GPIO_H_
 
 #include "stm8s.h"
+#include <stdbool.h>
 
 void gpio_init();
 void gpio_led_on();
