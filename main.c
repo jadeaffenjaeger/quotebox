@@ -3,7 +3,10 @@
 #include "clock.h"
 #include "awu.h"
 #include "gpio.h"
+#include "lfsr.h"
 
+#define ARR_LEN(x) (sizeof(x)/sizeof(x[0]))
+#define VOLUME 20
 
 void start_player();
 void stop_player();
@@ -11,7 +14,20 @@ void stop_player();
 void main() {
 
     /* Delays to go to sleep for*/
+#ifdef DEBUG
     uint16_t sleep_times[] = {5, 6, 3, 2, 1, 5};
+
+#else
+    uint16_t sleep_times[] = {
+            211, 191, 204, 225, 229, 
+            197, 275, 244, 183, 187, 
+            282, 267, 297, 182, 292, 
+            255, 266, 252, 184, 242, 
+            208, 279, 295, 288, 211, 
+            298, 249, 277, 246, 256 
+    };
+#endif
+
     uint8_t sleep_idx = 0;
     uint8_t track_idx = 1;
 
@@ -46,10 +62,7 @@ void main() {
 
         /* Go to sleep for next interval*/
         awu_sleep_n_seconds(sleep_times[sleep_idx++]);
-        /* FIXME make arr length variable*/
-        if (sleep_idx >= 6) {
-            sleep_idx = 0;
-        }
+        sleep_idx %= ARR_LEN(sleep_times);
     }
 }
 
@@ -58,7 +71,7 @@ void start_player() {
     gpio_fet_on();
     dfplayer_reset();
     dfplayer_wait_for_init();
-    dfplayer_set_volume(20);
+    dfplayer_set_volume(VOLUME);
 }
 
 /* Shut down DFPlayer*/
