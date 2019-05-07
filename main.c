@@ -4,23 +4,32 @@
 #include "uart.h"
 #include "awu.h"
 #include "gpio.h"
-
+#include "lfsr.h"
 #include "dfplayer.h"
 
-#define VOLUME 28
-#define ARR_LEN(x) sizeof(x)/sizeof(x[0])
+#define ARR_LEN(x) (sizeof(x)/sizeof(x[0]))
+#define VOLUME 20
 
 void start_player();
 void stop_player();
 
 void main() {
 
-    /* Array of variable idle times between 5 and 10 minutes (in seconds)*/
-    uint16_t sleep_times[] = { 557, 547, 332, 581, 591,
-                               459, 507, 417, 565, 598,
-                               373, 351, 395, 365, 490,
-                               466, 539, 536, 442, 472,
-                               472, 470, 511, 416, 512 };
+    /* Delays to go to sleep for*/
+#ifdef DEBUG
+    uint16_t sleep_times[] = {5, 6, 3, 2, 1, 5};
+
+#else
+    uint16_t sleep_times[] = {
+            211, 191, 204, 225, 229, 
+            197, 275, 244, 183, 187, 
+            282, 267, 297, 182, 292, 
+            255, 266, 252, 184, 242, 
+            208, 279, 295, 288, 211, 
+            298, 249, 277, 246, 256 
+    };
+#endif
+
     uint8_t sleep_idx = 0;
     uint8_t track_idx = 1;
 
@@ -55,11 +64,8 @@ void main() {
         gpio_led_off();
 
         /* Go to sleep for next interval*/
-        awu_sleep_n_seconds(sleep_times[sleep_idx]);
-        sleep_idx++;
-        if (sleep_idx >= ARR_LEN(sleep_times)) {
-            sleep_idx = 0;
-        }
+        awu_sleep_n_seconds(sleep_times[sleep_idx++]);
+        sleep_idx %= ARR_LEN(sleep_times);
     }
 }
 

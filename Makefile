@@ -22,7 +22,7 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(patsubst $(SRCDIR)/%.c, $(BUILDDIR)/%.rel, $(SRCS))
 	   
 INCLUDES = -I$(INCDIR)
-CFLAGS   = -m$(PLATFORM) --verbose
+CFLAGS   = -m$(PLATFORM) --verbose -DDEBUG
 
 #Build recipes
 $(BUILDDIR)/%.rel: $(SRCDIR)/%.c
