@@ -4,6 +4,12 @@ This piece of electronics was made for an installation where speakers at various
 
 ### Components
 A DFPlayer mini module is used to play mp3 sound bites from an SD card. Since the Idle Power consumption of the DFPlayer is quite high, even when in Standby mode, an external STM8 microcontroller is used to power up the DFPlayer through a MOSFET when needed and power it down as soon as it has finished playing. The STM8 also keeps track of sleep times and which track on the card to play next.
+The components used are:
+- [DFPlayer Mini](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299)
+- [STM8S103 Breakout Board](https://github.com/TG9541/stm8ef/wiki/Breakout-Boards#stm8s103f3p6-breakout-board)
+- [IRLZ44N MOSFET](http://www.irf.com/product-info/datasheets/data/irlz44n.pdf)
+- [HobbyKing 1S 750mAh LiPo](https://hobbyking.com/en_us/turnigy-nano-tech-750mah-1s-35-70c-lipo-pack-fits-nine-eagles-solo-pro-180.html)
+summing up to below 5€ per speaker (without battery)
 
 ### Energy
 750mAh LiPo batteries from HobbyKing were used to power each speaker as I had them laying around from my drone anyway. Both the STM8 and DFPlayer work with 3-5V, so no voltage regulator was needed, keeping the price down. The voltage of the LiPo is not checked by the microcontroller, however, so the circuit will deep-discharge the battery if left unattended for too long. For our use case, the speakers played a sound of ca. 5s every few minutes. The STM8 needs ca. 2mA when in sleep mode (mostly
