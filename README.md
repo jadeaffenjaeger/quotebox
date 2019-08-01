@@ -16,7 +16,7 @@ The firmware can be built with SDCC using `make all` and uploaded to a board wit
 [stm8flash]: https://github.com/vdudouyt/stm8flash
 
 ### Schematics
-I tried started doing a custom PCB for the speakers, but ended up opting for Perf Board eventually. Therefore the schematics are only a rough guide.
+I tried started doing a custom PCB for the speakers, but ended up opting for Perf Board eventually. The PCB layout therefore is not up to date and should not be used as is.
 
 ### Housing
 ![Quotebox Housing](img/quotebox_housing.jpg)
