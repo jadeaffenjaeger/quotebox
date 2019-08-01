@@ -9,6 +9,7 @@ The components used are:
 - [STM8S103 Breakout Board](https://github.com/TG9541/stm8ef/wiki/Breakout-Boards#stm8s103f3p6-breakout-board)
 - [IRLZ44N MOSFET](http://www.irf.com/product-info/datasheets/data/irlz44n.pdf)
 - [HobbyKing 1S 750mAh LiPo](https://hobbyking.com/en_us/turnigy-nano-tech-750mah-1s-35-70c-lipo-pack-fits-nine-eagles-solo-pro-180.html)
+
 summing up to below 5€ per speaker (without battery)
 
 ### Energy
