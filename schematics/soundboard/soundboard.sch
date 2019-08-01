@@ -154,14 +154,12 @@ F 3 "" H 2950 4400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2950 4050 2950 4400
-Text Label 5300 3300 2    50   ~ 0
+Text Label 5650 4350 2    50   ~ 0
 FET
 Text Label 2350 3850 2    50   ~ 0
 FET
 Wire Wire Line
 	2350 3850 2650 3850
-Wire Wire Line
-	5300 3300 5900 3300
 Wire Wire Line
 	4200 4100 3750 4100
 Wire Wire Line
@@ -192,7 +190,5 @@ Wire Wire Line
 Wire Wire Line
 	5750 3000 6150 3000
 Wire Wire Line
-	6150 3100 5900 3100
-Wire Wire Line
-	5900 3100 5900 3300
+	5650 4350 6150 4350
 $EndSCHEMATC
